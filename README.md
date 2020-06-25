@@ -1,5 +1,5 @@
 # Twitter_SlideOutMenu
-UIKit. Animations. Adaptive interface.
+Learning Course. UIKit. Animations. Adaptive interface.
 
 UIKit:
   Анимации
