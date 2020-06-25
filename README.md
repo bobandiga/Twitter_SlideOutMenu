@@ -1,16 +1,18 @@
 # Twitter_SlideOutMenu
 UIKit. Animations. Adaptive interface.
 
-UIKit
+UIKit:
   Анимации
   UITableView
   UINavigationController
   UIAlertController
   UIStackView
   UIPanGestureRecognizer
-Секреты и уловки
+  
+Секреты и уловки:
   Рефакторинг компонентов
   Автоматическое изменение размера ячейки
-Ориентация
+  
+Ориентация:
   Портрет и пейзаж
   iPhone и iPad
