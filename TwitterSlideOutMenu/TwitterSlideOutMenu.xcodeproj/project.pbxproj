@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7DFD15624A658E100A97B81 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DFD15524A658E100A97B81 /* MenuViewController.swift */; };
 		B7EEBE1624A5039100C98FD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EEBE1524A5039100C98FD7 /* AppDelegate.swift */; };
 		B7EEBE1824A5039100C98FD7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EEBE1724A5039100C98FD7 /* SceneDelegate.swift */; };
 		B7EEBE1A24A5039100C98FD7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EEBE1924A5039100C98FD7 /* MainViewController.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B7DFD15524A658E100A97B81 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B7EEBE1224A5039100C98FD7 /* TwitterSlideOutMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterSlideOutMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7EEBE1524A5039100C98FD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7EEBE1724A5039100C98FD7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				B7EEBE1E24A5039400C98FD7 /* Assets.xcassets */,
 				B7EEBE2024A5039400C98FD7 /* LaunchScreen.storyboard */,
 				B7EEBE2324A5039400C98FD7 /* Info.plist */,
+				B7DFD15524A658E100A97B81 /* MenuViewController.swift */,
 			);
 			path = TwitterSlideOutMenu;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 				B7EEBE1A24A5039100C98FD7 /* MainViewController.swift in Sources */,
 				B7EEBE1624A5039100C98FD7 /* AppDelegate.swift in Sources */,
 				B7EEBE1824A5039100C98FD7 /* SceneDelegate.swift in Sources */,
+				B7DFD15624A658E100A97B81 /* MenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
