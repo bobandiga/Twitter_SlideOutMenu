@@ -85,7 +85,7 @@ final class MenuHeaderView: UIView {
         overallStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         overallStackView.isLayoutMarginsRelativeArrangement = true
-        overallStackView.layoutMargins = UIEdgeInsets(top: 24, left: 16, bottom: 16, right: 16)
+        overallStackView.layoutMargins = UIEdgeInsets(top: 24, left: 16, bottom: 24, right: 16)
         
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.widthAnchor.constraint(equalToConstant: 50).isActive = true

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B76D61A224AB7AD400E81BCA /* MenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76D61A124AB7AD400E81BCA /* MenuHeaderView.swift */; };
 		B76D61A524AB7ED800E81BCA /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76D61A424AB7ED800E81BCA /* UILabel.swift */; };
+		B76D61A724AB8FF700E81BCA /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76D61A624AB8FF700E81BCA /* MenuItemCell.swift */; };
 		B7DFD15624A658E100A97B81 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DFD15524A658E100A97B81 /* MenuViewController.swift */; };
 		B7DFD15C24AA57F000A97B81 /* SlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7DFD15B24AA57F000A97B81 /* SlideViewController.swift */; };
 		B7EEBE1624A5039100C98FD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EEBE1524A5039100C98FD7 /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		B76D61A124AB7AD400E81BCA /* MenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
 		B76D61A424AB7ED800E81BCA /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		B76D61A624AB8FF700E81BCA /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		B7DFD15524A658E100A97B81 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		B7DFD15B24AA57F000A97B81 /* SlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideViewController.swift; sourceTree = "<group>"; };
 		B7EEBE1224A5039100C98FD7 /* TwitterSlideOutMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterSlideOutMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +50,7 @@
 			children = (
 				B76D61A324AB7ECF00E81BCA /* Extensions */,
 				B76D61A124AB7AD400E81BCA /* MenuHeaderView.swift */,
+				B76D61A624AB8FF700E81BCA /* MenuItemCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7EEBE1A24A5039100C98FD7 /* HomeViewController.swift in Sources */,
+				B76D61A724AB8FF700E81BCA /* MenuItemCell.swift in Sources */,
 				B7DFD15C24AA57F000A97B81 /* SlideViewController.swift in Sources */,
 				B76D61A524AB7ED800E81BCA /* UILabel.swift in Sources */,
 				B76D61A224AB7AD400E81BCA /* MenuHeaderView.swift in Sources */,
