@@ -8,24 +8,32 @@
 
 import UIKit
 
-class MainViewController: UITableViewController {
+class HomeViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         
         setupNavigationItem()
-        setupMenuViewController()
+        //setupMenuViewController()
+        //setupPanGesture()
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panHandle(_:)))
-        view.addGestureRecognizer(panGesture)
-        
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 1
+        guard let window = UIApplication.shared.windows.first else { return }
+        window.addSubview(darkCoverView)
+        darkCoverView.frame = window.frame
     }
     
+    fileprivate lazy var darkCoverView: UIView = {
+        let view = UIView()
+        view.alpha = 0
+        view.backgroundColor = UIColor.init(white: 0, alpha: 0.6)
+        //Если установить значение на false то все действия перейдут на иерархию ниже
+        view.isUserInteractionEnabled = false
+        return view
+    }()
     fileprivate var menuWidth: CGFloat = 300
     fileprivate let menuViewController = MenuViewController()
+    fileprivate var menuIsOpen = false
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
@@ -33,17 +41,14 @@ class MainViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.backgroundColor = .clear
+        cell.backgroundColor = .white
         cell.textLabel?.text = "Test"
         return cell
     }
-
-    
-    var menuIsOpen = false
     
 }
 
-fileprivate extension MainViewController {
+fileprivate extension HomeViewController {
     
     func setupNavigationItem() {
         title = "Home"
@@ -58,6 +63,14 @@ fileprivate extension MainViewController {
         addChild(menuViewController)
     }
     
+    func setupPanGesture() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panHandle(_:)))
+        view.addGestureRecognizer(panGesture)
+        
+        panGesture.minimumNumberOfTouches = 1
+        panGesture.maximumNumberOfTouches = 1
+    }
+    
     func performAnimation(transform: CGAffineTransform) {
         UIView.animate(withDuration: 0.5,
                        delay: 0,
@@ -67,6 +80,8 @@ fileprivate extension MainViewController {
                        animations: { [weak self] in
                         self?.menuViewController.view.transform = transform
                         self?.navigationController?.view.transform = transform
+                        self?.darkCoverView.transform = transform
+                        self?.darkCoverView.alpha = transform == .identity ? 0 : 1
         }) { (finished) in
             
         }
@@ -98,6 +113,9 @@ fileprivate extension MainViewController {
         
         tx = max(0, min(menuWidth, tx))
         
+        //tx - прогресс | menuWidth - общая шкала
+        darkCoverView.alpha = tx / menuWidth
+        
         performAnimation(transform: CGAffineTransform(translationX: tx, y: 0))
         
         if case .ended = sender.state {
@@ -106,21 +124,14 @@ fileprivate extension MainViewController {
     }
     
     func handleEnded(_ gesture: UIPanGestureRecognizer) {
-        let tx = gesture.translation(in: view).x
-        if menuIsOpen {
-            if abs(tx) < menuWidth / 4 {
-                openHandle()
-            } else {
-                hideHandle()
-            }
-        } else {
-            if tx < menuWidth / 2 {
-                hideHandle()
-            } else {
-                openHandle()
-            }
-        }
+        let velocity = abs(gesture.velocity(in: view).x)
+        let treshold : CGFloat = 500
         
+        if menuIsOpen {
+            velocity > treshold ? hideHandle() : openHandle()
+        } else {
+            velocity > treshold ? openHandle() : hideHandle()
+        }
     }
 }
 
