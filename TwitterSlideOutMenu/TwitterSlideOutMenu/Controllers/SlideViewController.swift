@@ -37,9 +37,16 @@ class SlideViewController: UIViewController {
         return constraint
     }()
     fileprivate var menuIsOpen = false
-    
+    fileprivate lazy var darkCoverView: UIView = {
+        let view = UIView()
+        view.alpha = 0
+        view.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false //Позволяет отработать жестам на уровеьн ниже
+        return view
+    }()
 }
- 
+
 fileprivate extension SlideViewController {
     func setupUI() {
         view.addSubview(contentView)
@@ -54,7 +61,8 @@ fileprivate extension SlideViewController {
             menuView.topAnchor.constraint(equalTo: view.topAnchor),
             menuView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             menuView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-            menuView.widthAnchor.constraint(equalToConstant: MENU_WIDTH)
+            menuView.widthAnchor.constraint(equalToConstant: MENU_WIDTH),
+
         ])
         
     }
@@ -71,6 +79,8 @@ fileprivate extension SlideViewController {
         menuView.addSubview(menuVCView)
         menuVCView.translatesAutoresizingMaskIntoConstraints = false
         
+        contentView.addSubview(darkCoverView)
+        
         NSLayoutConstraint.activate([
             homeVCView.topAnchor.constraint(equalTo: contentView.topAnchor),
             homeVCView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -81,6 +91,11 @@ fileprivate extension SlideViewController {
             menuVCView.bottomAnchor.constraint(equalTo: menuView.bottomAnchor),
             menuVCView.trailingAnchor.constraint(equalTo: menuView.trailingAnchor),
             menuVCView.leadingAnchor.constraint(equalTo: menuView.leadingAnchor),
+            
+            darkCoverView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            darkCoverView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            darkCoverView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            darkCoverView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
         ])
         
         addChild(menuViewController)
@@ -109,7 +124,7 @@ fileprivate extension SlideViewController {
         leadingContentConstraint.constant = tx
         
         //tx - прогресс | menuWidth - общая шкала
-        //darkCoverView.alpha = tx / menuWidth
+        darkCoverView.alpha = tx / MENU_WIDTH
         
         if case .ended = sender.state {
             handleEnded(sender)
@@ -118,27 +133,38 @@ fileprivate extension SlideViewController {
     
     func handleEnded(_ gesture: UIPanGestureRecognizer) {
         
-        let translation = gesture.translation(in: view).x
         let velocity = abs(gesture.velocity(in: view).x)
-        let treshold : CGFloat = 200
+        let treshold : CGFloat = 450
         
-        //guard velocity > treshold else { return }
-        if translation < MENU_WIDTH / 2 {
-            leadingContentConstraint.constant = 0
-            menuIsOpen = false
+        if menuIsOpen {
+            velocity > treshold ? closeMenu() : openMenu()
         } else {
-            leadingContentConstraint.constant = MENU_WIDTH
-            menuIsOpen = true
+            velocity > treshold ? openMenu() : closeMenu()
         }
         
-        
-        
+    }
+    
+    func performAnimations() {
+        let alphaFlag = menuIsOpen
         UIView.animate(withDuration: 0.5,
                        delay: 0,
                        options: [.curveEaseOut],
                        animations: { [weak self] in
                         self?.view.layoutIfNeeded()
+                        self?.darkCoverView.alpha = alphaFlag ? 1 : 0
         })
+    }
+    
+    func openMenu() {
+        leadingContentConstraint.constant = MENU_WIDTH
+        menuIsOpen = true
+        performAnimations()
+    }
+    
+    func closeMenu() {
+        leadingContentConstraint.constant = 0
+        menuIsOpen = false
+        performAnimations()
     }
 }
 
