@@ -51,7 +51,7 @@ class SlideViewController: UIViewController {
         return view
     }()
     
-    fileprivate let menuViewController = MenuViewController()
+    fileprivate let menuViewController = UINavigationController(rootViewController: MenuViewController())
     fileprivate var contentViewController: UIViewController? {
         didSet {
             setupContentViewController()

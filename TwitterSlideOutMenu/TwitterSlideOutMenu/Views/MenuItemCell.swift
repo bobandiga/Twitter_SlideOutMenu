@@ -21,6 +21,7 @@ final class MenuItemCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         selectionStyle = .none
         let horStackView = UIStackView(arrangedSubviews: [iconImageView, titleLabel])
         horStackView.axis = .horizontal
@@ -45,6 +46,13 @@ final class MenuItemCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        
+        titleLabel.textColor = selected ? #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1) : .black
     }
     
     class IconImageView: UIImageView {

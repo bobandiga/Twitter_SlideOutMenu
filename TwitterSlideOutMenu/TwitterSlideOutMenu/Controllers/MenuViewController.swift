@@ -13,7 +13,7 @@ struct CellItem {
     let title: String
 }
 
-final class MenuViewController: UITableViewController {
+class MenuViewController: UITableViewController {
     
     let cellItems : [CellItem] = [
         CellItem(icon: UIImage(systemName: "person"), title: "Home"),
@@ -26,6 +26,7 @@ final class MenuViewController: UITableViewController {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.separatorStyle = .none
+        setupSearchBar()
     }
     
     fileprivate let headerView = MenuHeaderView()
@@ -54,5 +55,22 @@ final class MenuViewController: UITableViewController {
         parentVC.setViewController(indexPath.row)
     }
     
+    fileprivate func setupSearchBar() {
+        let searchController = UISearchController()
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        searchController.searchBar.barTintColor = .red
+        searchController.searchBar.delegate = self
+        navigationItem.title = "Menu"
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+}
+
+extension MenuViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        print(text)
+        return true
+    }
 }
 
