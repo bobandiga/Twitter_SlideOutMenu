@@ -51,7 +51,7 @@ class MenuViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let parentVC = parent as? SlideViewController else { return }
+        guard let parentVC = navigationController?.parent as? SlideViewController else { return }
         parentVC.setViewController(indexPath.row)
     }
     

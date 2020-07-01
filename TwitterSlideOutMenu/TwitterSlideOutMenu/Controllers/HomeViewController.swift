@@ -15,25 +15,7 @@ class HomeViewController: UITableViewController {
         view.backgroundColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
         
         setupNavigationItem()
-        //setupMenuViewController()
-        //setupPanGesture()
-        
-        guard let window = UIApplication.shared.windows.first else { return }
-        window.addSubview(darkCoverView)
-        darkCoverView.frame = window.frame
     }
-    
-    fileprivate lazy var darkCoverView: UIView = {
-        let view = UIView()
-        view.alpha = 0
-        view.backgroundColor = UIColor.init(white: 0, alpha: 0.6)
-        //Если установить значение на false то все действия перейдут на иерархию ниже
-        view.isUserInteractionEnabled = false
-        return view
-    }()
-    fileprivate var menuWidth: CGFloat = 300
-    fileprivate let menuViewController = MenuViewController()
-    fileprivate var menuIsOpen = false
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
@@ -52,86 +34,28 @@ fileprivate extension HomeViewController {
     
     func setupNavigationItem() {
         title = "Home"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(openHandle))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Hide", style: .plain, target: self, action: #selector(hideHandle))
-    }
-    
-    func setupMenuViewController() {
-        guard let window = UIApplication.shared.windows.first else { return }
-        window.addSubview(menuViewController.view)
-        menuViewController.view.frame = CGRect(x: -menuWidth, y: 0, width: menuWidth, height: window.frame.height)
-        addChild(menuViewController)
-    }
-    
-    func setupPanGesture() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panHandle(_:)))
-        view.addGestureRecognizer(panGesture)
+        let image = UIImage(named: "GitHub_avatar")?.withRenderingMode(.alwaysOriginal)
+        let imageButton = UIButton()
+        imageButton.setImage(image, for: .normal)
+        imageButton.translatesAutoresizingMaskIntoConstraints = false
+        imageButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        imageButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        imageButton.imageView?.contentMode = .scaleAspectFill
+        imageButton.imageView?.layer.cornerRadius = 20
+        imageButton.clipsToBounds = true
+        imageButton.adjustsImageWhenHighlighted = false
+        imageButton.addTarget(self, action: #selector(openHandle), for: .touchDown)
+        let buttonItem = UIBarButtonItem(customView: imageButton)
         
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 1
-    }
-    
-    func performAnimation(transform: CGAffineTransform) {
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: 1,
-                       initialSpringVelocity: 1,
-                       options: [.curveEaseOut],
-                       animations: { [weak self] in
-                        self?.menuViewController.view.transform = transform
-                        self?.navigationController?.view.transform = transform
-                        self?.darkCoverView.transform = transform
-                        self?.darkCoverView.alpha = transform == .identity ? 0 : 1
-        }) { (finished) in
-            
-        }
+        navigationItem.leftBarButtonItem = buttonItem
     }
     
     @objc
     func openHandle() {
-        menuIsOpen = true
-        performAnimation(transform: CGAffineTransform.init(translationX: menuWidth, y: 0))
+        guard let parent = navigationController?.parent as? SlideViewController else { return }
+        parent.openMenu()
+        
     }
-    
-    @objc
-    func hideHandle() {
-        menuIsOpen = false
-        performAnimation(transform: .identity)
-    }
-    
-    @objc
-    func panHandle(_ sender: UIPanGestureRecognizer) {
-        
-        var tx = sender.translation(in: view).x
-        
-        if menuIsOpen {
-            tx += menuWidth
-        }
-        
-        //min(menuWidth, tx) запретит выдвигать меню вправо
-        //max - запретит выезжать влево
-        
-        tx = max(0, min(menuWidth, tx))
-        
-        //tx - прогресс | menuWidth - общая шкала
-        darkCoverView.alpha = tx / menuWidth
-        
-        performAnimation(transform: CGAffineTransform(translationX: tx, y: 0))
-        
-        if case .ended = sender.state {
-            handleEnded(sender)
-        }
-    }
-    
-    func handleEnded(_ gesture: UIPanGestureRecognizer) {
-        let velocity = abs(gesture.velocity(in: view).x)
-        let treshold : CGFloat = 500
-        
-        if menuIsOpen {
-            velocity > treshold ? hideHandle() : openHandle()
-        } else {
-            velocity > treshold ? openHandle() : hideHandle()
-        }
-    }
+ 
 }
 

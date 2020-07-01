@@ -82,6 +82,13 @@ class SlideViewController: UIViewController {
         }
     }
     
+    public func openMenu() {
+        leadingContentConstraint.constant = MENU_WIDTH
+        trailingContentConstraint.constant = MENU_WIDTH
+        menuIsOpen = true
+        performAnimations()
+    }
+    
 }
 
 fileprivate extension SlideViewController {
@@ -218,12 +225,7 @@ fileprivate extension SlideViewController {
         })
     }
     
-    func openMenu() {
-        leadingContentConstraint.constant = MENU_WIDTH
-        trailingContentConstraint.constant = MENU_WIDTH
-        menuIsOpen = true
-        performAnimations()
-    }
+    
     
     func closeMenu() {
         leadingContentConstraint.constant = 0
